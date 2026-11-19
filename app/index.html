@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neon Coast Cover Studio — Vice City poster maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">NC</span>
+    <div>
+      <h1>NEON COAST <span>COVER STUDIO</span></h1>
+      <p>Turn any photo + caption into a Vice City-style poster cover. Photos never leave your machine.</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button id="undoBtn" type="button" title="Undo">↩ Undo</button>
+    <button id="redoBtn" type="button" title="Redo">↪ Redo</button>
+    <button id="exportAllBtn" type="button" class="primary">⬇ Export all 3 sizes</button>
+  </div>
+</header>
+
+<main class="workspace">
+  <section class="controls" aria-label="Cover controls">
+    <div class="group">
+      <h2>1 · Photos</h2>
+      <label class="file-btn">📷 Add your photos
+        <input id="photoInput" type="file" accept="image/*" multiple hidden>
+      </label>
+      <div class="sample-row">
+        <button id="sampleBtn" type="button">☀ Load sample photos</button>
+        <span class="hint">2 free sample photos, one click</span>
+      </div>
+      <div id="photoStrip" class="photo-strip" aria-label="Loaded photos"></div>
+      <p class="hint">Click a panel on the cover, then pick which photo fills it. One photo can fill many panels — or use a different photo per panel.</p>
+    </div>
+
+    <div class="group">
+      <h2>2 · Layout <span id="layoutName" class="group-value">9-Panel Grid</span></h2>
+      <div id="layoutRow" class="chip-row" role="group" aria-label="Layout"></div>
+    </div>
+
+    <div class="group">
+      <h2>3 · Colour grade <span id="gradeName" class="group-value">Sunset</span></h2>
+      <div id="gradeRow" class="chip-row" role="group" aria-label="Colour grade"></div>
+      <label class="slider-label">Grade strength <output id="gradeOut">70%</output>
+        <input id="gradeStrength" type="range" min="0" max="100" value="70">
+      </label>
+    </div>
+
+    <div class="group">
+      <h2>4 · Lettering</h2>
+      <label class="field">Title
+        <input id="titleInput" type="text" value="NEON COAST" maxlength="24" spellcheck="false">
+      </label>
+      <label class="field">Neon subtitle
+        <input id="subtitleInput" type="text" value="vice city nights" maxlength="40" spellcheck="false">
+      </label>
+      <label class="field">Badge ribbon
+        <input id="badgeInput" type="text" value="VICE CITY" maxlength="18" spellcheck="false">
+      </label>
+      <label class="slider-label">Heat meter <output id="heatOut">★★★★☆</output>
+        <input id="heatInput" type="range" min="1" max="5" step="1" value="4">
+      </label>
+    </div>
+
+    <div class="group" id="panelGroup">
+      <h2>Selected panel <span id="panelName" class="group-value">Panel 1</span></h2>
+      <label class="field">Photo in this panel
+        <select id="panelPhoto"></select>
+      </label>
+      <label class="slider-label">Zoom <output id="zoomOut">100%</output>
+        <input id="zoomInput" type="range" min="50" max="300" value="100">
+      </label>
+      <label class="slider-label">Position left–right <output id="oxOut">0</output>
+        <input id="oxInput" type="range" min="-100" max="100" value="0">
+      </label>
+      <label class="slider-label">Position up–down <output id="oyOut">0</output>
+        <input id="oyInput" type="range" min="-100" max="100" value="0">
+      </label>
+      <div class="row-btns">
+        <button id="fillAllBtn" type="button">Fill all panels with this photo</button>
+        <button id="resetPanelBtn" type="button">Reset panel crop</button>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2>5 · Export PNG</h2>
+      <p class="hint">One click writes all three post sizes at once. Files download to your machine — nothing is uploaded.</p>
+      <div class="export-grid">
+        <button class="export-one" data-size="1080x1080" type="button">■ 1080 × 1080<br><span>Square post</span></button>
+        <button class="export-one" data-size="1080x1350" type="button">▮ 1080 × 1350<br><span>Portrait / story</span></button>
+        <button class="export-one" data-size="1920x1080" type="button">▬ 1920 × 1080<br><span>Landscape cover</span></button>
+      </div>
+      <p class="steps">3 steps: load a photo → pick a layout → export.</p>
+    </div>
+
+    <p class="credits">Original art &amp; lettering. Fonts Anton + Pacifico under the SIL Open Font License (see app/fonts/OFL.txt). No Rockstar Games logo, artwork or font.</p>
+  </section>
+
+  <section class="stage-wrap" aria-label="Live preview">
+    <div class="stage-bar">
+      <span id="stageLabel">Live preview — 1080 × 1080</span>
+      <span class="stage-sizes">
+        <button data-preview="1080x1080" type="button" class="active">1:1</button>
+        <button data-preview="1080x1350" type="button">4:5</button>
+        <button data-preview="1920x1080" type="button">16:9</button>
+      </span>
+    </div>
+    <div class="stage-scroll">
+      <canvas id="stage" width="1080" height="1080"></canvas>
+    </div>
+    <p class="stage-hint">Click any panel on the cover to select it, then crop it on the left. Drag a panel to move its photo.</p>
+  </section>
+</main>
+
+<script src="src/cover.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
